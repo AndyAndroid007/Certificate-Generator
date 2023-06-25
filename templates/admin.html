@@ -2,21 +2,54 @@
 <html>
 <head>
   <title>Admin Page - Certificate Generator</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    .navbar-gradient {
-      background-image: linear-gradient(to left, #f200ff, #8800ff);
+    body {
+      background: linear-gradient(45deg, #000000, #130F40);
+      color: #ffffff;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      padding: 10px;
+      background-color: transparent;
+      z-index: 1;
+    }
+
+    .navbar button {
+      margin-left: 10px;
+      padding: 8px 16px;
+      border: none;
+      background-color: transparent;
+      color: #ffffff;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .navbar button:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .user-row:hover {
+      background-color: rgba(255, 255, 255, 0.1);
     }
   </style>
 </head>
-<body class="bg-clip-padding-20">
-    <nav class="fixed top-0 z-50 w-full bg-gradient-to-r from-pink-500 to-purple-500 border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-      <!-- Navbar content -->
+<body>
+    <nav class="navbar">
+      <a href="{{ url_for('usersignup') }}" class="navbar-link"><button>Create new User</button></a>
+      <a href="{{ url_for('adminsignup') }}" class="navbar-link"><button>Create new Admin</button></a>
+      <a href="{{ url_for('mainpage') }}" class="navbar-link"><button>Generate Certificate</button></a>
     </nav>
   
 <main class="flex-center items-center m-20">
     <div class="flex-2">
-      <div class="mx-auto my-8 p-8 bg-gray-200 rounded-2xl">
+      <div class="mx-auto my-8 p-8 bg-black-200 rounded-2xl">
         <h2 class="text-2xl font-bold uppercase italic text-center">User Data</h2>
         
         <table class="w-full mt-6 border-collapse">
@@ -29,9 +62,9 @@
           </thead>
           <tbody>
             {% for user in users %}
-              <tr class="hover:bg-purple-100 border-b border-gray-200 py-10">
-                <td class="p-3 text-gray-600 border border-gray-300 hidden lg:table-cell">{{ user.username }}</td>
-                <td class="p-3 text-gray-600 border border-gray-300 hidden lg:table-cell">{{ user.password }}</td>
+              <tr class="user-row hover:bg-transparent border-b border-gray-200 py-10">
+                <td class="p-3 text-white-600 border border-gray-300 hidden lg:table-cell">{{ user.username }}</td>
+                <td class="p-3 text-white-600 border border-gray-300 hidden lg:table-cell">{{ user.password }}</td>
                 <td class="p-3 text-gray-600 border border-gray-300 hidden lg:table-cell">
                   <form action="{{ url_for('delete_user') }}" method="POST">
                     <input type="hidden" name="username" value="{{ user.username }}">
